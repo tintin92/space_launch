@@ -1,10 +1,11 @@
 const baseUrl = "https://lldev.thespacedevs.com/2.2.0/launch/upcoming/";
 const currentDate = new Date().toISOString();
 
+
 async function getFutureFloridaLaunches() {
   let allLaunches = [];
   let nextUrl = `${baseUrl}?limit=100&net__gte=${currentDate}`;
-
+  
   while (nextUrl) {
     try {
       const response = await fetch(nextUrl);
@@ -19,6 +20,7 @@ async function getFutureFloridaLaunches() {
         launch.pad.location.name.includes("Cape Canaveral") ||
         launch.pad.location.name.includes("Kennedy Space Center")
       );
+
       
       allLaunches = allLaunches.concat(floridaLaunches);
       nextUrl = data.next;
@@ -30,13 +32,35 @@ async function getFutureFloridaLaunches() {
   return allLaunches;
 }
 
+function displayLaunches(launches) {
+  const container = document.getElementById("launches-container");
+  container.innerHTML = ""; 
+
+  if (launches.length === 0) {
+    container.innerHTML = "<p> No upcoming launches found.</p>";
+    return;
+  }
+  const launchList = document.createElement("ul");
+  launches.forEach(launch => {
+    const launchItem = document.createElement("li");
+    launchItem.innerHTML = `
+    <strong>${launch.name}</strong><br>
+    Date: ${new Date(launch.net).toLocaleString()}
+    <br>
+    Location: ${launch.pad.location.name}
+    `;
+    launchList.appendChild(launchItem);
+  });
+  container.appendChild(launchList);
+}
+
 getFutureFloridaLaunches()
   .then(launches => {
     console.log(`Total upcoming Florida launches: ${launches.length}`);
-    launches.forEach(launch => {
-      console.log(`${launch.net} - ${launch.name} - ${launch.pad.location.name}`);
-    });
+      displayLaunches(launches);
   })
   .catch(error => {
     console.error("There was a problem fetching the launches:", error);
+    document.getElementById("launches-containerf").innerHTML = "<p> Error loading launches. Please try again later. </p>";
   });
+  
