@@ -30,8 +30,9 @@ async function getFutureFloridaLaunches() {
     }
   }
   return allLaunches;
-}
+};
 
+// Display upcoming launch list with details
 function displayLaunches(launches) {
   const container = document.getElementById("launches-container");
   container.innerHTML = ""; 
@@ -52,15 +53,34 @@ function displayLaunches(launches) {
     launchList.appendChild(launchItem);
   });
   container.appendChild(launchList);
+};
+
+// Get launch number count
+function displayFutureLaunchCount(launches) {
+  const containerCount = document.getElementById("upcoming-launch-number");
+
+  // Clear previous content  
+  containerCount.innerHTML = "";
+
+  // Create a parapraph element to display the count
+  const launchNumber = document.createElement("p");
+
+  // Set the text content to the number of launches
+  launchNumber.textContent = `Upcoming Launches: ${launches.length}`;
+
+  // Append the paragraph to the container
+  containerCount.appendChild(launchNumber);
+
 }
 
 getFutureFloridaLaunches()
   .then(launches => {
     console.log(`Total upcoming Florida launches: ${launches.length}`);
-      displayLaunches(launches);
+    displayFutureLaunchCount(launches);
+    displayLaunches(launches);
   })
   .catch(error => {
-    console.error("There was a problem fetching the launches:", error);
-    document.getElementById("launches-containerf").innerHTML = "<p> Error loading launches. Please try again later. </p>";
+    console.error("Error fetching the launches:", error);
+    // document.getElementById("launches-container").innerHTML = "<p> Error loading launches. Please try again later. </p>";
   });
   
