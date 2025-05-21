@@ -23,3 +23,4 @@ The next five launches are accessible freely using the following HTTP GET shortc
 https://fdo.rocketlaunch.live/json/launches/next/5
 
 https://www.rocketlaunch.live/api
+

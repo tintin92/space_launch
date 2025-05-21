@@ -1,0 +1,15 @@
+{
+  "name": "space_launch",
+  "version": "1.0.0",
+  "description": "- Get the time and date of upcoming launches occuring at Kennedy Space Center (KSC) and Cape Canaveral, Florida.",
+  "main": "scripts.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "eslint-config-wesbos": "^4.3.2"
+  }
+}
